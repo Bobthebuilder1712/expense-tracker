@@ -2,7 +2,7 @@
 
 	"use strict";
 
-	var fullHeight = function () {
+	var adjustFullHeight = function () {
 
 		$('.js-fullheight').css('height', $(window).height());
 		$(window).resize(function () {
@@ -10,41 +10,37 @@
 		});
 
 	};
-	fullHeight();
-
-	$('#sidebarCollapse').on('click', function () {
-		$('#sidebar').toggleClass('active');
-	});
+	adjustFullHeight();
 
 })(jQuery);
 
-function getPreviousMonthNames(numOfMonths) {
-	const monthNames = [];
+function retrievePastMonthNames(numOfMonths) {
+	const pastMonths = [];
 	const currentDate = new Date();
 	for (let i = 0; i < numOfMonths; i++) {
 		const previousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - i - 1, 1);
 		const monthName = previousMonth.toLocaleString('default', { month: 'long' });
-		monthNames.push(monthName);
+		pastMonths.push(monthName);
 	}
-	console.log(monthNames);
-	return monthNames;
+	console.log(pastMonths);
+	return pastMonths;
 }
 
-function setDataForPreviousMonths() {
+function initializeMonthlyData() {
 	const monthlyData = {};
 	// Generate a random value between a given range
-	function getRandomValue(min, max) {
+	function generateRandomAmount(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
-	const months = getPreviousMonthNames(new Date().getMonth());
+	const months = retrievePastMonthNames(new Date().getMonth());
 	months.forEach(month => {
 		const existingData = JSON.parse(localStorage.getItem(month)) || {};
 		// Check if expense and income fields exist, and initialize them if not
 		if (!existingData.expense) {
-			existingData.expense = getRandomValue(2000, 5000);
+			existingData.expense = generateRandomAmount(2000, 5000);
 		}
 		if (!existingData.income) {
-			existingData.income = getRandomValue(2000, 5000);
+			existingData.income = generateRandomAmount(2000, 5000);
 		}
 		monthlyData[month] = existingData;
 	});

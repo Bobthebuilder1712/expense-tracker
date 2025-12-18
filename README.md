@@ -17,4 +17,8 @@ This project helps users track their income and expenses and view monthly data.
 - jQuery
 - Browser localStorage
 
+## Author
+Bobthebuilder1712  
+GitHub: https://github.com/Bobthebuilder1712/expense-tracker
+
 ## Project Structure
